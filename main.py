@@ -38,7 +38,9 @@ def correlation():
 
         summed_routes = {}
         for key in routes_tuples:
-            summed_routes[key] = float(routes_tuples[key]['moveForward']) + float(routes_tuples[key]['moveBackward'])
+            moveForward = routes_tuples.get(key, {}).get('moveForward', 0)
+            moveBackward = routes_tuples.get(key, {}).get('moveBackward', 0)
+            summed_routes[key] = moveForward + moveBackward if moveForward is not None and moveBackward is not None else 0
         routes_to_discard = sorted(summed_routes, key=summed_routes.get, reverse=True)[number_of_routes+1:]
         for serial in routes_to_discard:
             routes_tuples[serial] = {}
