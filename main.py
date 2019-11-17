@@ -20,7 +20,7 @@ def correlation():
 
     base_station = request.args.get('serial')
     time_frame = request.args.get('time')
-    number_of_routes = request.args.get('routes', CONST_ROUTES)
+    number_of_routes = int(request.args.get('routes', CONST_ROUTES))
 
     filenames_correlation = [f'{correlation_source_folder}/{file}' for file in os.listdir(correlation_source_folder)]
     filenames_routes = [f'{routes_source_folder}/{file}' for file in os.listdir(routes_source_folder)]
@@ -30,19 +30,16 @@ def correlation():
 
     routes_matrix = RoutesMatrix(filenames_correlation)
 
-    print(routes_matrix.matrix)
-
     if base_station and time_frame:
         correlation_tuples = correlation_matrix.find_correlations(base_station, time_frame)
         routes_tuples = routes_matrix.find_routes(base_station, time_frame)
 
         keys_list = [key for key in correlation_tuples if key != base_station]
-        
+
         summed_routes = {}
         for key in routes_tuples:
             summed_routes[key] = float(routes_tuples[key]['moveForward']) + float(routes_tuples[key]['moveBackward'])
         routes_to_discard = sorted(summed_routes, key=summed_routes.get, reverse=True)[number_of_routes+1:]
-
         for serial in routes_to_discard:
             routes_tuples[serial] = {}
 

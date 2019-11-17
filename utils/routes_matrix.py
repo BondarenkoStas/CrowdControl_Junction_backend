@@ -21,7 +21,6 @@ class RoutesMatrix:
                 if not row_index:
                     stations = row
                 else:
-                    print(row)
                     matrix[row[0]] = {}
                     for column_index, value in enumerate(row):
                         if column_index:
@@ -36,8 +35,6 @@ class RoutesMatrix:
             response[key]['moveForward'] = needed_table.get(base_station, {}).get(key)
             response[key]['moveBackward'] = needed_table.get(key, {}).get(base_station)
         return response
-        
-        
 
     def get_station_keys(self, time):
         return [key for key in self.matrix[time]]
