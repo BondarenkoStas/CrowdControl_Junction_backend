@@ -14,6 +14,10 @@ cors = CORS(app)
 @app.route("/correlation_and_routes")
 @cross_origin(origin='*',headers=['access-control-allow-origin','Content-Type'])
 def correlation():
+    import sys
+    print(sys.modules[__name__])
+
+
     source_folder = 'data/correlation'
 
     base_station = request.args.get('serial')
