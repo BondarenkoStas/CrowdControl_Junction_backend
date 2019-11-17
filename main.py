@@ -28,7 +28,7 @@ def correlation():
     correlation_matrix = CorrelationMatrix(filenames_correlation)
     station_keys = correlation_matrix.get_station_keys(time_frame)
 
-    routes_matrix = RoutesMatrix(filenames_correlation)
+    routes_matrix = RoutesMatrix(filenames_routes)
 
     if base_station and time_frame:
         correlation_tuples = correlation_matrix.find_correlations(base_station, time_frame)
@@ -41,7 +41,7 @@ def correlation():
             moveForward = routes_tuples.get(key, {}).get('moveForward', 0)
             moveBackward = routes_tuples.get(key, {}).get('moveBackward', 0)
             summed_routes[key] = moveForward + moveBackward if moveForward is not None and moveBackward is not None else 0
-        routes_to_discard = sorted(summed_routes, key=summed_routes.get, reverse=True)[number_of_routes+1:]
+        routes_to_discard = sorted(summed_routes, key=summed_routes.get, reverse=True)[number_of_routes:]
         for serial in routes_to_discard:
             routes_tuples[serial] = {}
 
