@@ -28,7 +28,7 @@ class CorrelationMatrix:
         return matrix
 
     def find_correlations(self, base_station, time_frame):
-        return self.matrix[time_frame][base_station]
+        return self.matrix.get(time_frame, {}).get(base_station, {})
 
     def get_station_keys(self, time):
         return [key for key in self.matrix[time]]
