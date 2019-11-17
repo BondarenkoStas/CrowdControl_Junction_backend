@@ -14,10 +14,6 @@ cors = CORS(app)
 @app.route("/correlation_and_routes")
 @cross_origin(origin='*',headers=['access-control-allow-origin','Content-Type'])
 def correlation():
-    import sys
-    print(sys.modules[__name__])
-
-
     source_folder = 'data/correlation'
 
     base_station = request.args.get('serial')
@@ -48,4 +44,5 @@ def correlation():
         }
 
 if __name__ == "__main__":
-    app.run(debug=True, host= '0.0.0.0')
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
